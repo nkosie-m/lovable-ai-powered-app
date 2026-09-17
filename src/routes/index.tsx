@@ -218,8 +218,16 @@ function Workspace() {
       })),
   ].slice(0, 8);
 
+  if (loading || !user) {
+    return (
+      <div className="grid min-h-screen place-items-center bg-background">
+        <Loader2 className="size-5 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
 
   return (
+
     <div className="flex min-h-screen bg-background font-sans">
       <aside
         className={cn(
