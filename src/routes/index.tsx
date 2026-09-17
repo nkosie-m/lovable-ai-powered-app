@@ -14,7 +14,9 @@ import {
   Copy,
   Download,
   Loader2,
+  LogOut,
 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
