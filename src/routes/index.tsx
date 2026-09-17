@@ -219,8 +219,8 @@ function Workspace() {
       </aside>
 
       <div className="w-full min-w-0 md:ml-[250px] md:w-[calc(100%-250px)]">
-        <header className="sticky top-0 z-10 flex h-[72px] items-center justify-between border-b border-border bg-card/90 px-5 backdrop-blur md:px-8">
-          <div className="flex items-center gap-3">
+        <header className="sticky top-0 z-10 flex h-[72px] items-center justify-between gap-3 border-b border-border bg-card/90 px-5 backdrop-blur md:px-8">
+          <div className="flex min-w-0 items-center gap-3">
             <Button
               variant="ghost"
               size="icon"
@@ -230,8 +230,56 @@ function Workspace() {
             >
               <Menu />
             </Button>
-            <h1 className="text-lg font-semibold tracking-tight">{active.title}</h1>
+            <h1 className="truncate text-lg font-semibold tracking-tight">{active.title}</h1>
           </div>
+
+          <div className="relative ml-auto w-full max-w-[340px]">
+            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setSearchOpen(true);
+              }}
+              onFocus={() => setSearchOpen(true)}
+              onBlur={() => window.setTimeout(() => setSearchOpen(false), 120)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && results[0]) results[0].run();
+                if (e.key === "Escape") setSearchOpen(false);
+              }}
+              placeholder="Jump to a tool or saved draft…"
+              aria-label="Search tools and saved drafts"
+              className="pl-9"
+            />
+            {searchOpen && results.length > 0 && (
+              <ul className="absolute left-0 right-0 top-[calc(100%+6px)] z-30 max-h-[320px] overflow-auto rounded-xl border border-border bg-popover p-1.5 shadow-[var(--shadow-lift)]">
+                {results.map((r) => (
+                  <li key={r.key}>
+                    <button
+                      type="button"
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={r.run}
+                      className="flex w-full items-start gap-3 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+                    >
+                      <r.icon className="mt-0.5 size-4 shrink-0 text-primary" />
+                      <span className="min-w-0">
+                        <span className="block truncate font-medium">{r.title}</span>
+                        <span className="block truncate text-xs text-muted-foreground">
+                          {r.subtitle}
+                        </span>
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {searchOpen && query.trim() && results.length === 0 && (
+              <div className="absolute left-0 right-0 top-[calc(100%+6px)] z-30 rounded-xl border border-border bg-popover px-3 py-2.5 text-sm text-muted-foreground shadow-[var(--shadow-lift)]">
+                No matching tool or saved draft.
+              </div>
+            )}
+          </div>
+
           <div className="flex gap-2">
             <Button variant="outline" size="icon" aria-label="Help">
               <HelpCircle />
@@ -241,6 +289,7 @@ function Workspace() {
             </Button>
           </div>
         </header>
+
 
         <main className="mx-auto max-w-[1300px] p-5 md:p-8">
           <section className="mb-7 flex flex-col items-start justify-between gap-5 md:flex-row md:items-end">
