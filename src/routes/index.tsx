@@ -337,7 +337,7 @@ function Workspace() {
               <p className="text-xs font-extrabold uppercase tracking-widest text-primary">
                 AI productivity workspace
               </p>
-              <h2 className="mt-2 text-3xl font-semibold leading-tight tracking-tight">
+              <h1 className="mt-2 text-3xl font-semibold leading-tight tracking-tight">
                 Get workplace tasks done faster.
               </h2>
               <p className="mt-2 max-w-[650px] text-sm text-muted-foreground">
