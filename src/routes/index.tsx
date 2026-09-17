@@ -339,7 +339,7 @@ function Workspace() {
               </p>
               <h1 className="mt-2 text-3xl font-semibold leading-tight tracking-tight">
                 Get workplace tasks done faster.
-              </h2>
+              </h1>
               <p className="mt-2 max-w-[650px] text-sm text-muted-foreground">
                 Create polished emails, turn meeting transcripts into concise notes, and
                 structure research into useful briefs — with editable AI-assisted outputs.
