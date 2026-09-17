@@ -117,6 +117,14 @@ function Workspace() {
   const [history, setHistory] = useState<{ tool: string; text: string }[]>([]);
   const [query, setQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
+  const { user, loading, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && !user) navigate({ to: "/auth" });
+  }, [loading, user, navigate]);
+
+
 
 
   const run = useServerFn(generateDraft);
