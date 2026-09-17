@@ -270,7 +270,7 @@ function Workspace() {
             >
               <Menu />
             </Button>
-            <h1 className="truncate text-lg font-semibold tracking-tight">{active.title}</h1>
+            
           </div>
 
           <div className="relative ml-auto w-full max-w-[340px]">
