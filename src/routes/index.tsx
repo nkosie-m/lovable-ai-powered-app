@@ -168,6 +168,43 @@ function Workspace() {
     URL.revokeObjectURL(url);
   };
 
+  const q = query.trim().toLowerCase();
+  const results = [
+    ...TOOLS.filter(
+      (t) =>
+        !q ||
+        t.title.toLowerCase().includes(q) ||
+        t.blurb.toLowerCase().includes(q) ||
+        t.badges.some((b) => b.toLowerCase().includes(q)),
+    ).map((t) => ({
+      key: `tool-${t.id}`,
+      icon: t.icon,
+      title: t.title,
+      subtitle: t.blurb,
+      run: () => {
+        setTool(t.id);
+        setQuery("");
+        setSearchOpen(false);
+        setMenuOpen(false);
+      },
+    })),
+    ...history
+      .map((h, i) => ({ ...h, i }))
+      .filter((h) => !q || h.tool.toLowerCase().includes(q) || h.text.toLowerCase().includes(q))
+      .map((h) => ({
+        key: `history-${h.i}`,
+        icon: History,
+        title: `${h.tool} · saved draft`,
+        subtitle: h.text.slice(0, 90),
+        run: () => {
+          setOutput(h.text);
+          setQuery("");
+          setSearchOpen(false);
+        },
+      })),
+  ].slice(0, 8);
+
+
   return (
     <div className="flex min-h-screen bg-background font-sans">
       <aside
