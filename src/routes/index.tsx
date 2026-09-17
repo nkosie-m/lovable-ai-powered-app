@@ -1,7 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 import {
   Mail,
   ListChecks,
@@ -13,7 +14,9 @@ import {
   Copy,
   Download,
   Loader2,
+  LogOut,
 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -114,6 +117,14 @@ function Workspace() {
   const [history, setHistory] = useState<{ tool: string; text: string }[]>([]);
   const [query, setQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
+  const { user, loading, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && !user) navigate({ to: "/auth" });
+  }, [loading, user, navigate]);
+
+
 
 
   const run = useServerFn(generateDraft);
@@ -207,8 +218,16 @@ function Workspace() {
       })),
   ].slice(0, 8);
 
+  if (loading || !user) {
+    return (
+      <div className="grid min-h-screen place-items-center bg-background">
+        <Loader2 className="size-5 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
 
   return (
+
     <div className="flex min-h-screen bg-background font-sans">
       <aside
         className={cn(
@@ -247,15 +266,26 @@ function Workspace() {
         </nav>
         <div className="mt-auto border-t border-sidebar-border pt-4">
           <div className="flex items-center gap-3 px-2 py-2">
-            <span className="grid size-9 place-items-center rounded-full bg-sidebar-accent text-xs font-bold">
-              U
+            <span className="grid size-9 place-items-center rounded-full bg-sidebar-accent text-xs font-bold uppercase">
+              {(user?.email ?? "U").charAt(0)}
             </span>
-            <div className="text-sm">
-              User
+            <div className="min-w-0 text-sm">
+              <span className="block truncate">{user?.email ?? "User"}</span>
               <span className="block text-xs text-sidebar-muted">Workspace account</span>
             </div>
           </div>
+          <button
+            onClick={async () => {
+              await signOut();
+              navigate({ to: "/auth" });
+            }}
+            className="mt-1 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm text-sidebar-muted transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+          >
+            <LogOut className="size-4" />
+            Sign out
+          </button>
         </div>
+
       </aside>
 
       <div className="w-full min-w-0 md:ml-[250px] md:w-[calc(100%-250px)]">
