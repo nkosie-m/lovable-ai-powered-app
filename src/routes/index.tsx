@@ -270,7 +270,7 @@ function Workspace() {
             >
               <Menu />
             </Button>
-            <h1 className="truncate text-lg font-semibold tracking-tight">{active.title}</h1>
+            
           </div>
 
           <div className="relative ml-auto w-full max-w-[340px]">
@@ -337,9 +337,9 @@ function Workspace() {
               <p className="text-xs font-extrabold uppercase tracking-widest text-primary">
                 AI productivity workspace
               </p>
-              <h2 className="mt-2 text-3xl font-semibold leading-tight tracking-tight">
+              <h1 className="mt-2 text-3xl font-semibold leading-tight tracking-tight">
                 Get workplace tasks done faster.
-              </h2>
+              </h1>
               <p className="mt-2 max-w-[650px] text-sm text-muted-foreground">
                 Create polished emails, turn meeting transcripts into concise notes, and
                 structure research into useful briefs — with editable AI-assisted outputs.
