@@ -10,7 +10,7 @@ const GenerateInput = z.object({
   fields: z.record(z.string()),
 });
 
-const SYSTEM_PROMPTS: Record<string, string> = {
+const SYSTEM_PROMPTS: Record<"email" | "notes" | "research", string> = {
   email:
     "Write a professional workplace email for the stated audience and goal. Be clear, concise, and action-oriented. Do not invent facts. Return subject line then body.",
   notes:
