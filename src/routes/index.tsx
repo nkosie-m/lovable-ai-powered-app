@@ -112,6 +112,9 @@ function Workspace() {
   const [fields, setFields] = useState({ ...EMPTY });
   const [output, setOutput] = useState("");
   const [history, setHistory] = useState<{ tool: string; text: string }[]>([]);
+  const [query, setQuery] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
+
 
   const run = useServerFn(generateDraft);
   const active = TOOLS.find((t) => t.id === tool)!;
