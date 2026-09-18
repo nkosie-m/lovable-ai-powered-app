@@ -353,10 +353,26 @@ function Workspace() {
           </div>
 
           <div className="flex gap-2">
-            <Button variant="outline" size="icon" aria-label="Help">
+            <Button
+              variant="outline"
+              size="icon"
+              aria-label="Help"
+              onClick={() => {
+                setSettingsTab("faqs");
+                setSettingsOpen(true);
+              }}
+            >
               <HelpCircle />
             </Button>
-            <Button variant="outline" size="icon" aria-label="Settings">
+            <Button
+              variant="outline"
+              size="icon"
+              aria-label="Settings"
+              onClick={() => {
+                setSettingsTab("appearance");
+                setSettingsOpen(true);
+              }}
+            >
               <Settings />
             </Button>
           </div>
