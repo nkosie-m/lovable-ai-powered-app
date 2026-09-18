@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { generateDraft } from "@/lib/assistant.functions";
+import { SettingsDialog } from "@/components/SettingsDialog";
 
 export const Route = createFileRoute("/")({
   head: () => ({
