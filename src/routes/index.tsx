@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { generateDraft } from "@/lib/assistant.functions";
+import { SettingsDialog } from "@/components/SettingsDialog";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -117,6 +118,8 @@ function Workspace() {
   const [history, setHistory] = useState<{ tool: string; text: string }[]>([]);
   const [query, setQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [settingsTab, setSettingsTab] = useState<"appearance" | "about" | "faqs">("appearance");
   const { user, loading, signOut } = useAuth();
   const navigate = useNavigate();
 
@@ -351,10 +354,26 @@ function Workspace() {
           </div>
 
           <div className="flex gap-2">
-            <Button variant="outline" size="icon" aria-label="Help">
+            <Button
+              variant="outline"
+              size="icon"
+              aria-label="Help"
+              onClick={() => {
+                setSettingsTab("faqs");
+                setSettingsOpen(true);
+              }}
+            >
               <HelpCircle />
             </Button>
-            <Button variant="outline" size="icon" aria-label="Settings">
+            <Button
+              variant="outline"
+              size="icon"
+              aria-label="Settings"
+              onClick={() => {
+                setSettingsTab("appearance");
+                setSettingsOpen(true);
+              }}
+            >
               <Settings />
             </Button>
           </div>
@@ -614,6 +633,13 @@ function Workspace() {
           </section>
         </main>
       </div>
+
+      <SettingsDialog
+        key={settingsTab}
+        open={settingsOpen}
+        onOpenChange={setSettingsOpen}
+        defaultTab={settingsTab}
+      />
     </div>
   );
 }
