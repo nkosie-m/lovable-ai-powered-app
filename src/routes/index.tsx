@@ -632,6 +632,13 @@ function Workspace() {
           </section>
         </main>
       </div>
+
+      <SettingsDialog
+        key={settingsTab}
+        open={settingsOpen}
+        onOpenChange={setSettingsOpen}
+        defaultTab={settingsTab}
+      />
     </div>
   );
 }
