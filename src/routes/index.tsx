@@ -117,6 +117,8 @@ function Workspace() {
   const [history, setHistory] = useState<{ tool: string; text: string }[]>([]);
   const [query, setQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [settingsTab, setSettingsTab] = useState<"appearance" | "about" | "faqs">("appearance");
   const { user, loading, signOut } = useAuth();
   const navigate = useNavigate();
 
